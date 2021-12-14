@@ -3,6 +3,7 @@ package com.upfordown.ismuer.core.controller;
 import com.upfordown.ismuer.core.dto.MeasureCreateDto;
 import com.upfordown.ismuer.core.dto.MeasureDto;
 import com.upfordown.ismuer.core.mapper.MeasureMapper;
+import com.upfordown.ismuer.core.persistance.model.Measure;
 import com.upfordown.ismuer.core.persistance.service.MeasureService;
 import org.joda.time.DateTime;
 import org.springframework.http.ResponseEntity;
@@ -24,19 +25,16 @@ public class MeasureController {
         this.measureService = measureService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<MeasureDto>> getAllMeasures(@RequestParam @NotNull String meterId) {
+    @GetMapping("/{meterId}")
+    public ResponseEntity<List<MeasureDto>> getAllMeasures(@PathVariable @NotNull String meterId, @RequestParam DateTime from, @RequestParam DateTime to) {
+        final List<Measure> measures;
+        if (from == null || to == null) {
+            measures = measureService.getMeasures(meterId);
+        } else {
+            measures = measureService.getMeasures(meterId, from, to);
+        }
         return ResponseEntity.ok(
-                measureService.getMeasures(meterId).stream()
-                        .map(MeasureMapper::toDto)
-                        .collect(Collectors.toList())
-        );
-    }
-
-    @GetMapping
-    public ResponseEntity<List<MeasureDto>> getAllMeasures(@RequestParam @NotNull String meterId, DateTime from, DateTime to) {
-        return ResponseEntity.ok(
-                measureService.getMeasures(meterId, from, to).stream()
+                measures.stream()
                         .map(MeasureMapper::toDto)
                         .collect(Collectors.toList())
         );

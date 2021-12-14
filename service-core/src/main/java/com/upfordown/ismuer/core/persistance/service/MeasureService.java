@@ -48,10 +48,11 @@ public class MeasureService {
     }
 
     public List<Measure> getMeasures(String meterId, DateTime from, DateTime to) {
-        final Statement<?> getUserById = cqlSession.prepare(selectMeasures)
-                .bind(meterId, from, to);
-
-        return cassandraTemplate.select(getUserById, Measure.class);
+//        final Statement<?> getUserById = cqlSession.prepare(selectMeasures)
+//                .bind(meterId, from, to);
+//
+//        return cassandraTemplate.select(getUserById, Measure.class);
+        return repository.getAllByMeterIdAndCheckedAtBetween(meterId, from, to);
     }
 
     public Measure create(MeasureCreateDto dto) {
