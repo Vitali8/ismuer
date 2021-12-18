@@ -5,6 +5,7 @@ import com.datastax.oss.driver.api.core.CqlSessionBuilder;
 import com.upfordown.ismuer.core.configuration.codec.TimeUuidToDateTimeCodec;
 import com.upfordown.ismuer.core.configuration.codec.TimestampToDateTimeCodec;
 import com.upfordown.ismuer.liquibase.configuration.CassandraLiquibaseAutoConfiguration;
+import org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -13,7 +14,7 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 
 @Configuration
 @EnableCassandraRepositories
-@Import(CassandraLiquibaseAutoConfiguration.class)
+@Import(value = {CassandraAutoConfiguration.class, CassandraLiquibaseAutoConfiguration.class})
 public class CassandraConfiguration {
 
     @Bean
