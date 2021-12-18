@@ -25,6 +25,7 @@
     <properties>
         <java.version>17</java.version>
         <joda-time.version>2.10.13</joda-time.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
     </properties>
 
     <build>

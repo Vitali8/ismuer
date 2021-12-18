@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:8081")
 @Validated
 @RestController
-@RequestMapping("/api/measures")
+@RequestMapping("/measures")
 public class MeasureController {
     private final MeasureService measureService;
 
