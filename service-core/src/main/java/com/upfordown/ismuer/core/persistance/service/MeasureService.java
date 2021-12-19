@@ -1,16 +1,14 @@
 package com.upfordown.ismuer.core.persistance.service;
 
-import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.SimpleStatement;
-import com.datastax.oss.driver.api.core.cql.Statement;
 import com.datastax.oss.driver.api.core.metadata.schema.ClusteringOrder;
 import com.upfordown.ismuer.core.dto.MeasureCreateDto;
+import com.upfordown.ismuer.core.factory.DateTimeFactory;
 import com.upfordown.ismuer.core.persistance.DatabaseSchema;
 import com.upfordown.ismuer.core.persistance.model.Measure;
 import com.upfordown.ismuer.core.persistance.repository.MeasureRepository;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.mapping.BasicMapId;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +28,9 @@ public class MeasureService {
             .orderBy(DatabaseSchema.Field.CHECKED_AT, ClusteringOrder.DESC)
             .build();
     private final MeasureRepository repository;
-    private final CqlSession cqlSession;
-    private final CassandraOperations cassandraTemplate;
 
-    public MeasureService(MeasureRepository repository, CqlSession cqlSession, CassandraOperations cassandraTemplate) {
+    public MeasureService(MeasureRepository repository) {
         this.repository = repository;
-        this.cqlSession = cqlSession;
-        this.cassandraTemplate = cassandraTemplate;
     }
 
     public Optional<Measure> getLatestMeasure(String meterId) {
@@ -56,7 +50,7 @@ public class MeasureService {
     }
 
     public Measure create(MeasureCreateDto dto) {
-        final var measure = new Measure(dto.getMeterId(), DateTime.now(DateTimeZone.UTC), dto.getAmount(), dto.getUnit());
+        final var measure = new Measure(dto.getMeterId(), DateTimeFactory.now(), dto.getAmount());
         return repository.save(measure);
     }
 }

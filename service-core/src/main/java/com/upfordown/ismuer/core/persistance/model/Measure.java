@@ -25,17 +25,13 @@ public class Measure {
     @Column(DatabaseSchema.Field.AMOUNT)
     private BigDecimal amount;
 
-    @Column(DatabaseSchema.Field.UNIT)
-    private String unit;
-
     public Measure() {
     }
 
-    public Measure(String meterId, DateTime checkedAt, BigDecimal amount, String unit) {
+    public Measure(String meterId, DateTime checkedAt, BigDecimal amount) {
         this.meterId = meterId;
         this.checkedAt = checkedAt;
         this.amount = amount;
-        this.unit = unit;
     }
 
     public String getMeterId() {
@@ -60,13 +56,5 @@ public class Measure {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
     }
 }

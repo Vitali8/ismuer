@@ -31,4 +31,8 @@ public class DateTimeFactory {
     public static UUID endOf(final DateTime dateTime) {
         return dateTime == null ? null : Uuids.endOf(dateTime.getMillis());
     }
+
+    public static DateTime now() {
+        return DateTime.now(DateTimeZone.UTC);
+    }
 }

@@ -8,8 +8,6 @@ public class MeasureCreateDto {
     private String meterId;
     @NotNull
     private BigDecimal amount;
-    @NotNull
-    private String unit;
 
     public String getMeterId() {
         return meterId;
@@ -25,13 +23,5 @@ public class MeasureCreateDto {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
     }
 }
