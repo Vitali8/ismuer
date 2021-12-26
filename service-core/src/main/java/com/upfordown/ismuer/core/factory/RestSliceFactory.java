@@ -1,11 +1,11 @@
 package com.upfordown.ismuer.core.factory;
 
-import com.datastax.oss.driver.api.core.cql.PagingState;
 import com.upfordown.ismuer.core.dto.RestSlice;
 import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.domain.Slice;
 
 import java.nio.ByteBuffer;
+import java.util.Base64;
 
 public final class RestSliceFactory {
 
@@ -23,7 +23,7 @@ public final class RestSliceFactory {
             if (pagingState != null) {
                 byte[] bytes = new byte[pagingState.remaining()];
                 pagingState.get(bytes);
-                result.setNext(PagingState.fromBytes(bytes).toString());
+                result.setNext(Base64.getEncoder().encodeToString(bytes));
             }
         }
 

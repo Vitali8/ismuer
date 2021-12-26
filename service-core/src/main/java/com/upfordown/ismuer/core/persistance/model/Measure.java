@@ -57,4 +57,13 @@ public class Measure {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "Measure{" +
+                "meterId='" + meterId + '\'' +
+                ", checkedAt=" + checkedAt +
+                ", amount=" + amount +
+                '}';
+    }
 }

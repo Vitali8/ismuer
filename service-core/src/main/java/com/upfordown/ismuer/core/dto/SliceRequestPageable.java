@@ -1,12 +1,12 @@
 package com.upfordown.ismuer.core.dto;
 
-import com.datastax.oss.driver.api.core.cql.PagingState;
 import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import javax.validation.constraints.Max;
 import java.nio.ByteBuffer;
+import java.util.Base64;
 
 public class SliceRequestPageable {
 
@@ -51,7 +51,7 @@ public class SliceRequestPageable {
     public CassandraPageRequest toPageRequest() {
         ByteBuffer pagingState = null;
         if (this.pagingState != null) {
-            pagingState = PagingState.fromString(this.pagingState).getRawPagingState();
+            pagingState = ByteBuffer.wrap(Base64.getDecoder().decode(this.pagingState));
         }
         final var pageRequest = PageRequest.of(0, size, sort);
         return CassandraPageRequest.of(pageRequest, pagingState);
